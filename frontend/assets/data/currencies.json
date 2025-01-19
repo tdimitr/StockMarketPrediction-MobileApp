@@ -1,0 +1,46 @@
+[
+  {
+    "key": "USD",
+    "label": "USD - US Dollar"
+  },
+  {
+    "key": "EUR",
+    "label": "EUR - Euro"
+  },
+  {
+    "key": "JPY",
+    "label": "JPY - Japanese Yen"
+  },
+  {
+    "key": "GBP",
+    "label": "GBP - British Pound"
+  },
+  {
+    "key": "AUD",
+    "label": "AUD - Australian Dollar"
+  },
+  {
+    "key": "CAD",
+    "label": "CAD - Canadian Dollar"
+  },
+  {
+    "key": "CHF",
+    "label": "CHF - Swiss Franc"
+  },
+  {
+    "key": "CNY",
+    "label": "CNY - Chinese Yuan"
+  },
+  {
+    "key": "INR",
+    "label": "INR - Indian Rupee"
+  },
+  {
+    "key": "NZD",
+    "label": "NZD - New Zealand Dollar"
+  },
+  {
+    "key": "RUB",
+    "label": "RUB - Russian Ruble"
+  }
+]
