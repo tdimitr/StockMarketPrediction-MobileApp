@@ -21,7 +21,7 @@ export default function StockDetail() {
     async function fetchStockData() {
       try {
         const response = await fetch(
-          `http://192.168.1.6:5000/api/stock/${symbol}`
+          `https://flaskserver-6avz.onrender.com/api/stock/${symbol}`
         );
         const data = await response.json();
         setStockData(data);
