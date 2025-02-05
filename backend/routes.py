@@ -45,6 +45,8 @@ def get_popular_stocks():
         try:
             stock = yf.Ticker(ticker)
             stock_info = stock.info
+            hist_data = stock.history(period="1mo")
+            historical_prices = hist_data['Close'].tolist()
 
             current_price = stock_info.get("currentPrice", "N/A")
             previous_close = stock_info.get("regularMarketPreviousClose", "N/A")
@@ -67,6 +69,7 @@ def get_popular_stocks():
                 "absoluteChange": absolute_change,
                 "changePercent": change_percent,
                 "logoUrl": logo_url,
+                "history": historical_prices
             })
         except Exception as e:
             print(f"Error fetching data for {ticker}: {e}")
@@ -102,7 +105,10 @@ def get_stock_data(symbol):
             'fiftyTwoWeekLow': stock_info.get('fiftyTwoWeekLow', 'N/A'),
             'targetMeanPrice': stock_info.get('targetMeanPrice', 'N/A'),
             'recommendationKey': stock_info.get('recommendationKey', 'N/A'),
-            'historicalData': historical_data
+            'historicalData': historical_data,
+            'sector': stock_info.get('sector', 'N/A'),
+            'industry': stock_info.get('industry', 'N/A'),
+            'industryGroup': stock_info.get('industryGroup', 'N/A')
         }
         
         return jsonify(response)

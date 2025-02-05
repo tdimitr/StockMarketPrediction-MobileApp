@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
+  RefreshControl,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,26 +16,35 @@ export default function Market() {
   const [searchText, setSearchText] = useState("");
   const [popularStocks, setPopularStocks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchStocks = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          "http://192.168.1.6:5000/api/popular-stocks"
-        );
-        const data = await response.json();
-        setPopularStocks(data);
-      } catch (error) {
-        console.error("Error fetching stocks:", error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchStocksData = async () => {
+    try {
+      const response = await fetch(
+        "https://flaskserver-6avz.onrender.com/api/popular-stocks"
+      );
+      const data = await response.json();
+      setPopularStocks(data);
+    } catch (error) {
+      console.error("Error fetching stocks:", error.message);
+    }
+  };
 
-    fetchStocks();
+  useEffect(() => {
+    const loadInitialData = async () => {
+      setLoading(true);
+      await fetchStocksData();
+      setLoading(false);
+    };
+    loadInitialData();
   }, []);
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await fetchStocksData();
+    setRefreshing(false);
+  };
 
   const handleSearchSubmit = () => {
     if (searchText.trim()) {
@@ -60,7 +70,9 @@ export default function Market() {
           </View>
         </View>
         <View className="items-end ml-4">
-          <Text className="text-lg text-gray-900">{item.currentPrice}</Text>
+          <Text className="text-lg text-gray-900">
+            ${item.currentPrice.toFixed(2)}
+          </Text>
           <Text
             className={`font-bold ${
               item.changePercent.startsWith("-")
@@ -123,6 +135,15 @@ export default function Market() {
           keyExtractor={(item) => item.symbol}
           renderItem={renderStockItem}
           contentContainerStyle={{ paddingHorizontal: 10 }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
+              colors={["#000000"]}
+              tintColor="#000000"
+              progressBackgroundColor="#ffffff"
+            />
+          }
         />
       )}
     </SafeAreaView>

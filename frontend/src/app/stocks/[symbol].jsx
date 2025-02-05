@@ -2,13 +2,20 @@ import { useEffect, useState } from "react";
 import { Text, View, ScrollView, TouchableOpacity } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { LineChart, CandlestickChart } from "react-native-wagmi-charts";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from "react-native-popup-menu";
 
 export default function StockDetail() {
   const { symbol } = useLocalSearchParams();
   const [stockData, setStockData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isCandlestick, setIsCandlestick] = useState(false);
+  const [chartType, setChartType] = useState("line");
 
   useEffect(() => {
     async function fetchStockData() {
@@ -29,11 +36,19 @@ export default function StockDetail() {
 
   if (loading) {
     return (
-      <View className="flex-1 items-center bg-gray-100">
+      <View className="flex-1 justify-center items-center bg-gray-100">
         <Text className="text-lg text-gray-800">Loading...</Text>
       </View>
     );
   }
+
+  const getChartIcon = () => {
+    return chartType === "line" ? (
+      <AntDesign name="linechart" size={24} color="black" />
+    ) : (
+      <MaterialIcons name="candlestick-chart" size={24} color="black" />
+    );
+  };
 
   const chartData =
     stockData?.historicalData?.map((item, index) => ({
@@ -68,10 +83,31 @@ export default function StockDetail() {
 
   return (
     <ScrollView className="flex-1 bg-gray-100 p-4">
-      <Text className="text-xl font-bold text-gray-800">
-        {stockData?.longName} ({stockData?.symbol})
-      </Text>
+      <View className="mt-4">
+        {/* Stock Name and Symbol */}
+        <Text className="text-xl font-bold text-gray-800">
+          {stockData?.longName} ({stockData?.symbol})
+        </Text>
 
+        {/* Sector & Industry Pills */}
+        <View className="mt-4 flex-row">
+          {/* Sector */}
+          <View className="px-4 py-2 border border-gray-300 rounded-full mr-3">
+            <Text className="text-black text-lg font-semibold">
+              {stockData?.sector}
+            </Text>
+          </View>
+
+          {/* Industry */}
+          <View className="px-4 py-2 border border-gray-300 rounded-full">
+            <Text className="text-black text-lg font-semibold">
+              {stockData?.industry}
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Current Price, Change, and Date */}
       <View className="mt-2">
         <Text className="text-2xl font-semibold text-gray-900">
           ${stockData?.currentPrice.toFixed(2)}
@@ -83,17 +119,41 @@ export default function StockDetail() {
         <Text className="text-sm text-gray-500">{formattedDate}</Text>
       </View>
 
+      {/* Chart Type Selection */}
       <View className="mt-4 flex-row justify-end">
-        <TouchableOpacity onPress={() => setIsCandlestick(!isCandlestick)}>
-          <FontAwesome
-            name={isCandlestick ? "line-chart" : "bar-chart"}
-            size={25}
-            color="black"
-          />
-        </TouchableOpacity>
+        <Menu>
+          <MenuTrigger>
+            <View className="flex-row items-center px-3 py-2 bg-white rounded-lg shadow">
+              {getChartIcon()}
+              <Text className="ml-2 text-lg text-gray-800">
+                {chartType === "line" ? "Line" : "Candle"}
+              </Text>
+              <AntDesign name="down" size={16} color="black" className="ml-2" />
+            </View>
+          </MenuTrigger>
+          <MenuOptions>
+            <MenuOption onSelect={() => setChartType("line")}>
+              <View className="flex-row items-center p-2">
+                <AntDesign name="linechart" size={20} color="black" />
+                <Text className="ml-2 text-lg">Line</Text>
+              </View>
+            </MenuOption>
+            <MenuOption onSelect={() => setChartType("candlestick")}>
+              <View className="flex-row items-center p-2">
+                <MaterialIcons
+                  name="candlestick-chart"
+                  size={20}
+                  color="black"
+                />
+                <Text className="ml-2 text-lg">Candle</Text>
+              </View>
+            </MenuOption>
+          </MenuOptions>
+        </Menu>
       </View>
 
-      {isCandlestick ? (
+      {/* Chart Rendering */}
+      {chartType === "candlestick" ? (
         <CandlestickChart.Provider data={candlestickData}>
           <CandlestickChart>
             <CandlestickChart.Candles />

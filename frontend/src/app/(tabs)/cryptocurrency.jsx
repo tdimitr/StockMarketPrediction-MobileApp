@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Image,
   ScrollView,
+  RefreshControl, // Import RefreshControl
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import CountryFlag from "react-native-country-flag";
@@ -18,39 +19,49 @@ export default function Cryptocurrency() {
   const [currency, setCurrency] = useState("usd");
   const [showModal, setShowModal] = useState(false);
   const [cryptoPrices, setCryptoPrices] = useState([]);
+  const [refreshing, setRefreshing] = useState(false); // State for refreshing
 
-  useEffect(() => {
-    const fetchCryptoPrices = async () => {
-      try {
-        // Fetch CoinGecko data
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc`
-        );
-        const data = await response.json();
-        if (data) {
-          const prices = data.map((coin) => {
-            const price = coin.current_price;
-            const formattedPrice =
-              Math.floor(price).toString().length >= 5
-                ? Math.round(price)
-                : price.toFixed(2);
+  // Function to fetch cryptocurrency prices
+  const fetchCryptoPrices = async () => {
+    try {
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc`
+      );
+      const data = await response.json();
+      if (data) {
+        const prices = data.map((coin) => {
+          const price = coin.current_price;
+          const formattedPrice =
+            Math.floor(price).toString().length >= 5
+              ? Math.round(price)
+              : price.toFixed(2);
 
-            return {
-              id: coin.id,
-              name: coin.name,
-              symbol: coin.symbol.toUpperCase(),
-              image: coin.image,
-              price: formattedPrice,
-              change24h: coin.price_change_percentage_24h.toFixed(2),
-            };
-          });
-          setCryptoPrices(prices);
-        }
-      } catch (error) {
-        console.error("Error fetching cryptocurrency prices:", error);
+          return {
+            id: coin.id,
+            name: coin.name,
+            symbol: coin.symbol.toUpperCase(),
+            image: coin.image,
+            price: formattedPrice,
+            change24h: coin.price_change_percentage_24h.toFixed(2),
+          };
+        });
+        setCryptoPrices(prices);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching cryptocurrency prices:", error);
+    } finally {
+      setRefreshing(false); // Stop refreshing after data is fetched
+    }
+  };
 
+  // Handle refresh
+  const handleRefresh = () => {
+    setRefreshing(true); // Start refreshing
+    fetchCryptoPrices(); // Fetch new data
+  };
+
+  // UseEffect hook to initially load cryptocurrency prices
+  useEffect(() => {
     fetchCryptoPrices();
   }, [currency]);
 
@@ -72,7 +83,12 @@ export default function Cryptocurrency() {
   );
 
   return (
-    <ScrollView className="flex-1 bg-gray-100 p-5">
+    <ScrollView
+      className="flex-1 bg-gray-100 p-5"
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+      }
+    >
       <View className="mb-5">
         <View className="flex-row items-center justify-between p-3 bg-gray-200 rounded-lg mb-3">
           {/* Coin Column */}

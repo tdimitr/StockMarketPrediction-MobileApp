@@ -35,7 +35,7 @@ export default function AlgorithmDetails() {
     const fetchPopularStocks = async () => {
       try {
         const response = await fetch(
-          "http://192.168.1.6:5000/api/popular-stocks"
+          "https://flaskserver-6avz.onrender.com/api/popular-stocks"
         );
         const data = await response.json();
         setPopularStocks(data);
@@ -51,7 +51,7 @@ export default function AlgorithmDetails() {
 
   const handleSearchSubmit = async () => {
     if (search.trim()) {
-      const apiUrl = `http://192.168.1.6:5000/api/${algorithm}/${search}`;
+      const apiUrl = `https://flaskserver-6avz.onrender.com/api/${algorithm}/${search}`;
       setIsImageLoading(true); // Start loading images
       try {
         const response = await fetch(apiUrl);
