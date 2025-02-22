@@ -51,9 +51,9 @@ These algorithms are implemented using **scikit-learn** and trained in **Jupyter
 git clone https://github.com/tdimitr/StockMarketPrediction-MobileApp.git
 ```
 
-2. Configure environment variables:
+2. Configuration:
 
-- Configure Cloudinary credentials in the `.env`.
+- Configure Cloudinary credentials in the `.env.template`.
 - Rename `backend/.env.template` to `.env`.
 - Update `<EXCHANGERATE_KEY>` from `frontend/app.json` with your API key from [ExchangeRate-API](https://www.exchangerate-api.com/).
 
