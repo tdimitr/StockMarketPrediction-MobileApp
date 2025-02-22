@@ -2,9 +2,9 @@
 
 Welcome to the **Stock Market Prediction App**, where you can track the latest trends in the stock market, view cryptocurrency prices, and convert currencies with real-time data. With predictions powered by advanced machine learning algorithms, this mobile app is your perfect companion for financial insights!
 
-## 🚀 App Features
+## App Features
 
-### 🌟 **Tabs**
+### **Tabs**
 
 1. **Market** 📉:  
    View real-time stock market data, top stocks, and top organizations in various sectors.
@@ -19,7 +19,7 @@ Welcome to the **Stock Market Prediction App**, where you can track the latest t
 4. **Cryptos** 💎:  
    Stay updated on the latest cryptocurrency market data, including price fluctuations and trends.
 
-### 🧠 **Predictions**
+### **Predictions**
 
 We implement 3 algorithms to predict stock market trends:
 
@@ -53,12 +53,9 @@ git clone https://github.com/tdimitr/StockMarketPrediction-MobileApp.git
 
 2. Configure environment variables:
 
-```
 - Rename `backend/.env.template` to `.env`.
 - Update `<EXCHANGERATE_KEY>` from `frontend/app.json` with your API key from [ExchangeRate-API](https://www.exchangerate-api.com/).
 - Configure Cloudinary credentials in the `.env`.
-
-```
 
 3. Set up the backend:
 
