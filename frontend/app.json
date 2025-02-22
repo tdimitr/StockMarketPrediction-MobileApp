@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "Stock Market Prediction",
+    "slug": "stock-market-prediction",
+    "version": "1.0.0",
+    "scheme": "StockMarketPrediction",
+    "orientation": "portrait",
+    "icon": "./assets/icon.jpg",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.tdimitrr.mobile"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": ["expo-router"],
+    "extra": {
+      "EXCHANGERATE_API_KEY": "<EXCHANGERATE_KEY>",
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d053535c-5c36-4afa-848f-7dd5f97f9a9e"
+      }
+    }
+  }
+}
