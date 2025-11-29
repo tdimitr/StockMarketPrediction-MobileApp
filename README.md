@@ -6,17 +6,17 @@ Welcome to the **Stock Market Prediction App**, where you can track the latest t
 
 ### **Tabs**
 
-1. **Market** 📉:  
+1. **Market** :  
    View real-time stock market data.
 
-2. **Predictions** 📊:  
+2. **Predictions** :  
    Get future stock price predictions.
 
-3. **Converter** 💱:  
+3. **Converter** :  
    Convert currencies with up-to-date exchange rates.  
    Supported currencies: 🇺🇸 🇪🇺 🇯🇵 🇬🇧 🇦🇺 🇨🇦 🇨🇭 🇨🇳 🇮🇳 🇳🇿 🇷🇺
 
-4. **Cryptos** 💎:  
+4. **Cryptos** :  
    Stay updated on the latest cryptocurrency market data, including price fluctuations and trends.
 
 ### **Predictions**
@@ -29,12 +29,12 @@ We implement 3 algorithms to predict stock market trends:
 
 These algorithms are implemented using **scikit-learn** and trained in **Jupyter Notebooks** for the best performance.
 
-### 💻 **Tech Stack**
+### **Tech Stack**
 
-- **React Native (Expo)** 📱: For mobile app development.
+- **React Native (Expo)** : For mobile app development.
 - **Flask**: Python server for handling API requests and processing predictions.
 
-### 📸 **_Screenshots_**
+### **_Screenshots_**
 
 <div style="display: flex; justify-content: space-around; gap: 10px;">
   <img src="https://raw.githubusercontent.com/tdimitr/StockMarketPrediction-MobileApp/master/images/market1.png" width="200" />
@@ -43,7 +43,7 @@ These algorithms are implemented using **scikit-learn** and trained in **Jupyter
   <img src="https://raw.githubusercontent.com/tdimitr/StockMarketPrediction-MobileApp/master/images/cryptos1.png" width="200" />
 </div>
 
-## 🖥️ Installation
+## Installation
 
 1. Clone the repository:
 
