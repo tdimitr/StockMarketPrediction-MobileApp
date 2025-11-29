@@ -1,4 +1,4 @@
-# 📈 Stock Market Prediction App
+# Stock Market Prediction App
 
 Welcome to the **Stock Market Prediction App**, where you can track the latest trends in the stock market, view cryptocurrency prices, and convert currencies. With predictions powered by machine learning algorithms, this mobile app is your perfect companion for financial insights.
 
